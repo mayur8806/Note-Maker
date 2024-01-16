@@ -6,7 +6,7 @@ from datetime import datetime
 # from datetime import datetime
 
 
-class Note(db.Model):
+class Note(db.Model): # type: ignore
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     note = db.Column(db.String(10000), nullable=False)
@@ -17,7 +17,7 @@ class Note(db.Model):
         return f"{self.ntitle} - {self.note}"
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin): # type: ignore
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))

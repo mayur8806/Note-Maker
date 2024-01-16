@@ -14,15 +14,15 @@ views = Blueprint('views', __name__)
 @views.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
-    if request.method == 'POST':
-        title = request.form.get('title')
-        note = request.form.get('note')
+    if request.method == 'POST': # type: ignore
+        title = request.form.get('title') # type: ignore
+        note = request.form.get('note') # type: ignore
 
         if not note:
             error_statement = "Fields are required "
             return render_template('home.html', error_statement=error_statement,note=note, title = title, user=current_user)
 
-        new_note = Note(title = title , note=note, user_id=current_user.id)
+        new_note = Note(title = title , note=note, user_id=current_user.id) # type: ignore
         db.session.add(new_note)
         db.session.commit()
         flash('Note added!', category='success')
@@ -49,11 +49,11 @@ def deleteAccout():
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():
-    note = json.loads(request.data)
+    note = json.loads(request.data) # type: ignore
     noteId = note['noteId']
     note = Note.query.get(noteId)
     if note:
-        if note.user_id == current_user.id:
+        if note.user_id == current_user.id: # type: ignore
             db.session.delete(note)
             db.session.commit()
 
@@ -77,9 +77,9 @@ def delete_note():
 
 @views.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
-    if request.method == 'POST':
-        title = request.form.get('title')
-        note = request.form.get('note')
+    if request.method == 'POST': # type: ignore
+        title = request.form.get('title') # type: ignore
+        note = request.form.get('note') # type: ignore
 
         notify = Note.query.filter_by(id=id).first()
         notify.title = title
